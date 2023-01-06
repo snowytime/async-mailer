@@ -1,0 +1,26 @@
+{
+	"jsc": {
+		"parser": {
+			"syntax": "typescript",
+			"tsx": true,
+			"decorators": true,
+			"dynamicImport": true
+		},
+		"target": "es2020",
+		"paths": {
+			"@errors/*": ["./src/errors/*"],
+			"@debug/*": ["./src/debug/*"],
+			"@logs/*": ["./src/logs/*"],
+			"@type/*": ["./src/types/*"],
+			"@finders/*": ["./src/finders/*"],
+			"@config/*": ["./src/config/*"],
+			"@helpers/*": ["./src/helpers/*"],
+			"@structures/*": ["./src/structures/*"],
+			"@parsers/*": ["./src/ast/*"]
+		},
+		"baseUrl": "."
+	},
+	"module": {
+		"type": "es6"
+	}
+}
