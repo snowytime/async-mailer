@@ -1,6 +1,6 @@
 {
 	"name": "@snowytime/async-mailer",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Simple extension of nodemailer to make it async-able, and with some other goodies",
 	"keywords": [],
 	"author": "",
