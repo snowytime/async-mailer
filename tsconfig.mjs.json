@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.json",
+    "include": ["src/**/*"],
+    "exclude": ["src/**/*.test.ts"],
+    "compilerOptions": {
+        "allowJs": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist/mjs",
+        "declarationMap": true,
+        "skipLibCheck": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2020"
+    }
+}

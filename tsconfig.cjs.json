@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.json",
+    "include": ["src/**/*"],
+    "exclude": ["src/**/*.test.ts"],
+    "compilerOptions": {
+        "allowJs": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist/cjs",
+        "declarationMap": true,
+        "skipLibCheck": true,
+        "module": "commonjs",
+        "target": "es2015",
+        "moduleResolution": "Node"
+    }
+}

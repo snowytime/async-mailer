@@ -1,5 +1,8 @@
+// @ts-ignore
 import nodemailer, { SentMessageInfo, Transporter } from "nodemailer";
 import type { Config, Mail } from "types.js";
+
+import { luhn } from "@snowytime/fns";
 
 const verify = async (transporter: Transporter<SentMessageInfo>) =>
 	new Promise((resolve, reject) => {
@@ -53,3 +56,6 @@ const mailer_factory =
 export const createMailer = (initializers: Config) => {
 	return mailer_factory(initializers);
 };
+
+console.log(luhn("4242424242424242"));
+// console.log(nanoid());

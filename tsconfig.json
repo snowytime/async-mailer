@@ -1,16 +1,23 @@
 {
-	"compilerOptions": {
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"target": "ES2020",
-		"sourceMap": true,
-		"jsx": "react",
-		"baseUrl": "src",
-		"rootDir": "src"
-	},
-	"include": ["./src/**/*"],
-	"exclude": ["node_modules"],
-	"ts-node": {
-		"esm": true
-	}
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "outDir": "dist",
+        "jsx": "react",
+        "allowJs": true,
+        "typeRoots": ["node_modules/@types", "./typings"],
+        "types": ["mocha", "chai", "node", "global"]
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"],
+    "ts-node": {
+        "esm": true,
+        "experimentalResolver": true,
+        "transpileOnly": true
+    }
 }

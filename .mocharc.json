@@ -1,0 +1,6 @@
+{
+    "extension": ["ts"],
+    "spec": "src/**/*.test.ts",
+    "require": ["ts-node/register", "chai/register-expect.js"],
+    "node-option": ["experimental-specifier-resolution=node", "loader=ts-node/esm", "no-warnings"]
+}
