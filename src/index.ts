@@ -1,61 +1,54 @@
-// @ts-ignore
 import nodemailer, { SentMessageInfo, Transporter } from "nodemailer";
-import type { Config, Mail } from "types.js";
 
-import { luhn } from "@snowytime/fns";
+import { EmailError, Mail } from "./types.js";
+import { verify } from "./verify/index.js";
+import { env, generateId } from "./helpers/index.js";
+import { send } from "./sender/index.js";
 
-const verify = async (transporter: Transporter<SentMessageInfo>) =>
-	new Promise((resolve, reject) => {
-		transporter.verify(function (error, success) {
-			if (error) {
-				// theres an error
-				reject(error);
-			} else {
-				// server is ready
-				resolve(success);
-			}
-		});
-	});
-const send = async ({
-	transporter,
-	options
-}: {
-	transporter: Transporter<SentMessageInfo>;
-	options: Mail;
-}) =>
-	new Promise((resolve, reject) => {
-		if (!options.html && !options.text) {
-			reject("Missing content -- needs either text or html property");
-		}
-		transporter.sendMail(options, (err, info) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(info);
-			}
-		});
-	});
-const mailer_factory =
-	({ provider, username, password }: Config) =>
-	async (options: Mail) => {
-		// prepare the transporter
-		const transporter = nodemailer.createTransport({
-			service: provider,
-			auth: {
-				user: username,
-				pass: password
-			}
-		});
-		try {
-			await verify(transporter);
-			await send({ transporter, options });
-		} catch (e: any) {
-			throw new Error(e);
-		}
-	};
-export const createMailer = (initializers: Config) => {
-	return mailer_factory(initializers);
+export * from "./builder/index.js";
+export * from "./injector/index.js";
+export * from "./sender/index.js";
+export * from "./verify/index.js";
+export * from "./helpers/index.js";
+
+type SendArgs = Mail | ((transactionId: string) => Promise<Mail>);
+
+export const snowmailerCtor = (transporter: Transporter<SentMessageInfo>) => {
+    return async function snowmailer(args: SendArgs) {
+        try {
+            await verify(transporter);
+            const transactionId = generateId();
+            if (typeof args === "function") {
+                const options = await args(transactionId);
+                if ((!options.html && !options.text) || !options.to || !options.subject) {
+                    throw new EmailError({
+                        message: "Email is missing either html or text, or to or subject",
+                    });
+                }
+                await send({ transporter, options });
+                return transactionId;
+            }
+            if ((!args.html && !args.text) || !args.to || !args.subject) {
+                throw new EmailError({
+                    message: "Email is missing either html or text, or to or subject",
+                });
+            }
+            await send({ transporter, options: args });
+            return transactionId;
+        } catch (e) {
+            if (e instanceof Error) {
+                throw new EmailError(e);
+            }
+            throw e;
+        }
+    };
 };
 
-console.log(luhn("4242424242424242"));
-// console.log(nanoid());
+const transporter = nodemailer.createTransport({
+    service: env.EMAIL_PROVIDER,
+    auth: {
+        user: env.EMAIL_USERNAME,
+        pass: env.EMAIL_PASSWORD,
+    },
+});
+export const snowmailer = snowmailerCtor(transporter);

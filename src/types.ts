@@ -1,21 +1,37 @@
 export type Config = {
-	username: string;
-	password: string;
-	provider: string;
+    username: string;
+    password: string;
+    provider: string;
 };
 export type Attachment = {
-	path?: string;
-	filename?: string;
-	content?: string;
-	contentType?: string;
-	encoding?: string;
-	raw?: string;
+    path?: string;
+    filename?: string;
+    content?: string;
+    contentType?: string;
+    encoding?: string;
+    raw?: string;
 };
-export type Mail = {
-	from: string;
-	to: string;
-	subject: string;
-	html?: string;
-	text?: string;
-	attachments?: Attachment[];
-};
+export interface Mail {
+    // from: string;
+    to: string;
+    subject: string;
+    html?: string;
+    text?: string;
+    attachments?: Attachment[];
+}
+interface EmailErrorConstructor {
+    message: string;
+    status?: number;
+}
+export class EmailError extends Error {
+    message: string;
+
+    status!: number;
+
+    type!: string;
+
+    constructor(data: EmailErrorConstructor) {
+        super(data.message);
+        this.message = data.message;
+    }
+}

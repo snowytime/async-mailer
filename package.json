@@ -42,6 +42,7 @@
 		"dotenv": "^16.0.3",
 		"mocha": "^10.2.0",
 		"sinon": "^15.0.1",
+		"styled-components": "^5.3.6",
 		"ts-node": "^10.9.1",
 		"typescript": "^4.9.4"
 	},
@@ -64,6 +65,7 @@
 		"cheerio": "^1.0.0-rc.12",
 		"html-minifier": "^4.0.0",
 		"inline-css": "^4.0.1",
+		"nanoid": "^4.0.0",
 		"nodemailer": "^6.8.0"
 	}
 }
