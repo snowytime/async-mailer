@@ -1,13 +1,6 @@
-import { builder, snowmailer } from "./index.js";
-import { EmailError } from "./types.js";
+import { EmailError, builder } from "../../src/index.js";
 
-export const confirmationTemplate = async ({
-    orderId,
-    trackId,
-}: {
-    orderId: string;
-    trackId: string;
-}) => {
+export const confirmationTemplate = async ({ orderId, trackId }) => {
     // we can run any kind of logic in here
     if (!orderId) throw new EmailError({ message: "orderId is required" });
     return {
@@ -37,24 +30,3 @@ export const confirmationTemplate = async ({
             `),
     };
 };
-
-const main = async () => {
-    const start = performance.now();
-    // every successful email will return a transaction id that you can save and even use in your template
-    const id = await snowmailer(async (transactionId) => {
-        const { subject, template } = await confirmationTemplate({
-            orderId: "o-124",
-            trackId: transactionId,
-        });
-        // must return a Mail object
-        return {
-            to: "snaer@ualberta.ca",
-            subject,
-            html: template,
-        };
-    });
-    const duration = performance.now() - start;
-    console.log({ duration, id });
-};
-
-main();

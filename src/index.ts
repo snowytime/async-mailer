@@ -10,6 +10,7 @@ export * from "./injector/index.js";
 export * from "./sender/index.js";
 export * from "./verify/index.js";
 export * from "./helpers/index.js";
+export * from "./types.js";
 
 type SendArgs = Mail | ((transactionId: string) => Promise<Mail>);
 
