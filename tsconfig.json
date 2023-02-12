@@ -1,24 +1,23 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
+        "module": "CommonJS",
         "target": "ESNext",
+        "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
         "moduleResolution": "NodeNext",
         "esModuleInterop": true,
+        "emitDeclarationOnly": true,
+        "declaration": true,
+        "declarationDir": "dist/types",
         "resolveJsonModule": true,
-        "sourceMap": true,
-        "strict": true,
-        "strictNullChecks": true,
-        "outDir": "dist",
-        "jsx": "react",
-        "allowJs": true,
         "typeRoots": ["node_modules/@types", "./typings"],
         "types": ["mocha", "chai", "node", "global"]
     },
-    "include": ["src"],
-    "exclude": ["node_modules"],
+    "include": ["src/**/*.ts"],
     "ts-node": {
         "esm": true,
-        "experimentalResolver": true,
-        "transpileOnly": true
+        "files": true,
+        "transpileOnly": true,
+        "experimentalSpecifierResolution": "explicit",
+        "experimentalResolver": true
     }
 }

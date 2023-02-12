@@ -18,7 +18,7 @@ export const snowmailerCtor = (transporter: Transporter<SentMessageInfo>) => {
     return async function snowmailer(args: SendArgs) {
         try {
             await verify(transporter);
-            const transactionId = generateId();
+            const transactionId = await generateId();
             if (typeof args === "function") {
                 const options = await args(transactionId);
                 if ((!options.html && !options.text) || !options.to || !options.subject) {

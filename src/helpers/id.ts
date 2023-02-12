@@ -8,9 +8,8 @@ easily even without having it shown anywhere in the email itself (display: none;
 Note the actual snowmailer() function returns the id if you choose to use it.
 */
 
-import { customAlphabet } from "nanoid";
-
-export const generateId = () => {
+export const generateId = async () => {
+    const { customAlphabet } = await import("nanoid");
     const alphabet = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 21);
     return alphabet();
 };
