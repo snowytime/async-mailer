@@ -57,7 +57,6 @@
         "dist"
     ],
     "dependencies": {
-        "@snowytime/fns": "^0.0.26",
         "cheerio": "^1.0.0-rc.12",
         "html-minifier": "^4.0.0",
         "inline-css": "^4.0.1",
