@@ -1,6 +1,6 @@
 {
     "name": "@snowytime/mailer",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A new take to expand nodemailer for async usage with a handy builder function and a few other helpers.",
     "scripts": {
         "test": "mocha --exit",
