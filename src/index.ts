@@ -1,12 +1,10 @@
-import nodemailer, { SentMessageInfo, Transporter } from "nodemailer";
+import nodemailer from "nodemailer";
 
 import { EmailError, Mail } from "./types.js";
 import { verify } from "./verify/index.js";
-import { env, generateId } from "./helpers/index.js";
+import { generateId } from "./helpers/index.js";
 import { send } from "./sender/index.js";
 
-export * from "./builder/index.js";
-export * from "./injector/index.js";
 export * from "./sender/index.js";
 export * from "./verify/index.js";
 export * from "./helpers/index.js";
@@ -14,9 +12,18 @@ export * from "./types.js";
 
 type SendArgs = Mail | ((transactionId: string) => Promise<Mail>);
 
-export const snowmailerCtor = (transporter: Transporter<SentMessageInfo>) => {
-    return async function snowmailer(args: SendArgs) {
+type TransportArguments = {
+    service: string;
+    auth: {
+        user: string;
+        pass: string;
+    };
+};
+
+export const snowmailer = (config: TransportArguments) => {
+    return async function inner(args: SendArgs) {
         try {
+            const transporter = nodemailer.createTransport(config);
             await verify(transporter);
             const transactionId = await generateId();
             if (typeof args === "function") {
@@ -44,12 +51,3 @@ export const snowmailerCtor = (transporter: Transporter<SentMessageInfo>) => {
         }
     };
 };
-
-const transporter = nodemailer.createTransport({
-    service: env.EMAIL_PROVIDER,
-    auth: {
-        user: env.EMAIL_USERNAME,
-        pass: env.EMAIL_PASSWORD,
-    },
-});
-export const snowmailer = snowmailerCtor(transporter);

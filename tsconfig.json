@@ -9,15 +9,22 @@
         "declaration": true,
         "declarationDir": "dist/types",
         "resolveJsonModule": true,
+        "jsx": "react",
         "typeRoots": ["node_modules/@types", "./typings"],
-        "types": ["mocha", "chai", "node", "global"]
+        "types": ["mocha", "chai", "node", "global"],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "@helpers/*": ["src/helpers/*"]
+        }
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "src/builder/index.tsx"],
     "ts-node": {
         "esm": true,
         "files": true,
         "transpileOnly": true,
         "experimentalSpecifierResolution": "explicit",
         "experimentalResolver": true
+        // "require": ["tsconfig-paths/register"]
     }
 }
