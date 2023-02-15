@@ -10,7 +10,10 @@ export * from "./verify/index.js";
 export * from "./helpers/index.js";
 export * from "./types.js";
 
-type SendArgs = Mail | ((transactionId: string) => Promise<Mail>);
+type SendArgs =
+    | Mail
+    | ((transactionId: string) => Promise<Mail>)
+    | ((transactionId: string) => Mail);
 
 type TransportArguments = {
     service: string;
@@ -25,8 +28,9 @@ export const snowmailer = (config: TransportArguments) => {
         try {
             const transporter = nodemailer.createTransport(config);
             await verify(transporter);
-            const transactionId = await generateId();
             if (typeof args === "function") {
+                // in this case we generate a custom id to be used in the email
+                const transactionId = await generateId();
                 const options = await args(transactionId);
                 if ((!options.html && !options.text) || !options.to || !options.subject) {
                     throw new EmailError({
@@ -34,15 +38,17 @@ export const snowmailer = (config: TransportArguments) => {
                     });
                 }
                 await send({ transporter, options });
-                return transactionId;
+                // return the transaction id and the options for reference
+                return { transactionId, ...options };
             }
             if ((!args.html && !args.text) || !args.to || !args.subject) {
                 throw new EmailError({
                     message: "Email is missing either html or text, or to or subject",
                 });
             }
+            const transactionId = args.transactionId || (await generateId());
             await send({ transporter, options: args });
-            return transactionId;
+            return { transactionId, ...args };
         } catch (e) {
             if (e instanceof Error) {
                 throw new EmailError(e);

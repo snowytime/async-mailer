@@ -17,6 +17,7 @@ export interface Mail {
     subject: string;
     html?: string;
     text?: string;
+    transactionId?: string;
     attachments?: Attachment[];
 }
 interface EmailErrorConstructor {
