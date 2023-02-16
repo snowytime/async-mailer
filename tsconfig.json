@@ -18,7 +18,7 @@
             "@helpers/*": ["src/helpers/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/builder/index.tsx"],
+    "include": ["src/**/*"],
     "ts-node": {
         "esm": true,
         "files": true,
