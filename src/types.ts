@@ -6,7 +6,7 @@ export type Config = {
 export type Attachment = {
     path?: string;
     filename?: string;
-    content?: string;
+    content?: Buffer | string;
     contentType?: string;
     encoding?: string;
     raw?: string;
