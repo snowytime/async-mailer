@@ -1,65 +1,61 @@
 {
     "name": "@snowytime/snowmailer",
     "version": "2.0.3",
-    "description": "A new take to expand nodemailer for async usage with a handy builder function and a few other helpers.",
+    "type": "module",
+    "description": "",
+    "devDependencies": {
+        "@snowytime/standards": "^1.0.2",
+        "@swc/cli": "^0.1.62",
+        "@swc/core": "^1.3.35",
+        "@types/html-minifier": "^4.0.2",
+        "@types/inline-css": "^3.0.1",
+        "@types/node": "^18.11.18",
+        "@types/nodemailer": "^6.4.7",
+        "ava": "^5.2.0",
+        "dotenv": "^16.0.3",
+        "mocha": "^10.2.0",
+        "module-alias": "^2.2.2",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.9.4"
+    },
+    "dependencies": {
+        "nanoid": "^4.0.0",
+        "nodemailer": "^6.8.0"
+    },
     "scripts": {
-        "test": "mocha --exit",
-        "build:esm": "BABEL_ENV=esm babel src --extensions '.ts' --out-dir 'dist/mjs' --source-maps",
-        "build:cjs": "BABEL_ENV=cjs babel src --extensions '.ts' --out-dir 'dist/cjs' --source-maps",
-        "build:types": "tsc",
-        "build": "rm -rf dist && npm run build:esm && npm run build:cjs && npm run build:types && sh finalize.sh",
-        "release:patch": "npm run test && npm run build && git add . && git commit -m '⚡️ auto patch' && git push origin master && npm version patch && npm publish",
+        "test": "ava",
+        "build": "rm -rf dist && swc src --config-file build.json -d dist && tsc",
+        "release:patch": "npm run build && git add . && git commit -m '⚡️ auto patch' && git push origin master && npm version patch && npm publish",
         "release:minor": "npm run test && npm run build && git add . && git commit -m '⚡️ auto minor' && git push origin master && npm version minor && npm publish",
         "release:major": "npm run test && npm run build && git add . && git commit -m '⚡️ auto major' && git push origin master && npm version major && npm publish"
     },
-    "keywords": [
-        "functions",
-        "algorithms",
-        "helpers",
-        "converters"
-    ],
-    "author": "snowytime",
-    "license": "MIT",
-    "homepage": "https://snowy.sh/packages/fns",
-    "bugs": {
-        "url": "https://github.com/snowytime/fns/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/snowytime/fns.git"
-    },
-    "devDependencies": {
-        "@snowytime/standards": "^1.0.0",
-        "@types/chai": "^4.3.4",
-        "@types/html-minifier": "^4.0.2",
-        "@types/inline-css": "^3.0.1",
-        "@types/mocha": "^10.0.1",
-        "@types/node": "^18.11.18",
-        "@types/nodemailer": "^6.4.7",
-        "@types/sinon": "^10.0.13",
-        "chai": "^4.3.7",
-        "chai-as-promised": "^7.1.1",
-        "dotenv": "^16.0.3",
-        "mocha": "^10.2.0",
-        "sinon": "^15.0.1",
-        "ts-node": "^10.9.1",
-        "tsconfig-paths": "^4.1.2",
-        "typescript": "^4.9.4"
-    },
-    "exports": {
-        "import": "./dist/mjs/index.js",
-        "require": "./dist/cjs/index.js",
-        "default": "./dist/mjs/index.js",
-        "types": "./dist/types/index.d.ts"
-    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "exports": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "engines": {
         "node": ">=16.0.0"
     },
     "files": [
         "dist"
     ],
-    "dependencies": {
-        "nanoid": "^4.0.0",
-        "nodemailer": "^6.8.0"
+    "_moduleAliases": {
+        "@": "src"
+    },
+    "ava": {
+        "files": [
+            "src/**/*.test.ts"
+        ],
+        "extensions": {
+            "ts": "module"
+        },
+        "nodeArguments": [
+            "--loader=ts-node/esm",
+            "--no-warnings"
+        ],
+        "require": [
+            "module-alias/register"
+        ]
     }
 }

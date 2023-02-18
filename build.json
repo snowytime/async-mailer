@@ -1,0 +1,20 @@
+{
+    "exclude": "^*.test.*$",
+    "minify": true,
+    "jsc": {
+        "parser": {
+            "syntax": "typescript",
+            "tsx": true,
+            "decorators": true,
+            "dynamicImport": true
+        },
+        "target": "es2020",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./dist/*"]
+        }
+    },
+    "module": {
+        "type": "nodenext"
+    }
+}

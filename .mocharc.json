@@ -1,8 +1,0 @@
-{
-    "extension": ["ts"],
-    "spec": "src/**/*.test.ts",
-    "recursive": true,
-    "timeout": 5000,
-    "require": ["ts-node/register", "chai/register-expect.js", "tests/chai.ts"],
-    "node-option": ["experimental-specifier-resolution=node", "loader=ts-node/esm", "no-warnings"]
-}
