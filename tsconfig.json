@@ -1,23 +1,9 @@
 {
+    "extends": "@snowytime/standards/configs/tsconfig-nodenext.json",
     "compilerOptions": {
-        "module": "NodeNext",
-        "target": "ESNext",
-        "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
-        "moduleResolution": "NodeNext",
-        "esModuleInterop": true,
-        "emitDeclarationOnly": true,
-        "declaration": true,
-        "declarationMap": true,
         "declarationDir": "dist",
-        "resolveJsonModule": true,
-        "jsx": "react"
+        "emitDeclarationOnly": true,
+        "rootDir": "src"
     },
-    "include": ["src/**/*"],
-    "ts-node": {
-        "esm": true,
-        "files": true,
-        "transpileOnly": true,
-        "experimentalSpecifierResolution": "explicit",
-        "experimentalResolver": true
-    }
+    "include": ["src/**/*"]
 }
